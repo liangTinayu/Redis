@@ -1,9 +1,11 @@
 package com.lty.redis;
 
+import com.lty.redis.util.JredisPoolUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @SpringBootTest
 class RedisApplicationTests {
@@ -31,9 +33,15 @@ class RedisApplicationTests {
         jedis.incr("k1");
         System.out.println("加后的结果为："+jedis.get("k1"));
 
+    }
 
-
-
+    @Test
+    public  void testPool(){
+        JedisPool jedisPool = JredisPoolUtil.getJredisPoolInstance();
+        Jedis jedis = jedisPool.getResource();
+        jedis.set("k11","v11");
+        System.out.println(jedis.get("k11"));
+        JredisPoolUtil.release(jedisPool,jedis);
     }
 
 }

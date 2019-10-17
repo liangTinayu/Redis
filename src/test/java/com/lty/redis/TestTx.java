@@ -10,7 +10,7 @@ public class TestTx {
         jedis.watch("balance");
         int consume = 10;
         Thread.sleep(10000);
-        if( consume>Integer.parseInt(jedis.get("balance") )      ){
+        if( consume>Integer.parseInt(jedis.get("balance"))){
             jedis.unwatch();
             System.out.println("余额不足！！");
             return false;
